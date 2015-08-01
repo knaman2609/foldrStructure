@@ -5,7 +5,6 @@
 - Browserify [npm install -g browserify]
 - Watchify [npm install -g watchify]
 - Gulp [npm install -g gulp]
-- 
  
 #### Local Installation
     npm install
