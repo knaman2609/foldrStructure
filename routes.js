@@ -6,6 +6,6 @@ module.exports = function(app) {
   });
 
   app.get('/users',function(req, res) {
-  	res.send(mock.users);
+  	res.status(401).send({'message': 'user unauthorised'});
   });
 }

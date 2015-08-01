@@ -1,5 +1,6 @@
 {
   "name": "Sample-app",
+  "description": "Sample-app",
   "dependencies": {
     "backbone": "^1.2.1",
     "express": "^4.13.1",

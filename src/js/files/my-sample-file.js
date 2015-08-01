@@ -1,5 +1,6 @@
 var $ = require('jquery');
 var Backbone = require('backbone');
+var Sync = require('../utils/backbone-sync-override')(Backbone);
 var _ = require('underscore');
 
 var userTemplate = require("../templates/user-template.hbs");
