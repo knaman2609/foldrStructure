@@ -1,5 +1,5 @@
-// var DEBUG = true;
-var DEBUG = false;
+var DEBUG = true;
+// var DEBUG = false;
 
 var express  = require('express');
 var app      = express();
