@@ -1,10 +1,14 @@
-#### Global Installations
+#### Global Installation
 - Nodejs
 - Sass [gem install sass]
 - Nodemon [npm install -g nodemon]
 - Browserify [npm install -g browserify]
 - Watchify [npm install -g watchify]
 - Gulp [npm install -g gulp]
+- 
+ 
+#### Local Installation
+    npm install
 
 ### Dir Structure
 	
@@ -38,7 +42,7 @@
         img/
         
     server.js
-    congig.js
+    config.js
     mock.js
     routes.js
     package.json
@@ -48,6 +52,7 @@
 
 ### Workflow [Dev]
 ##### Start  the server
+   
     nodemon server.js   [DEBUG true]
 
 ##### Run Browserify with watchify [for js compilation]
