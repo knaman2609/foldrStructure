@@ -60,9 +60,9 @@
     or
 
     set alias by:  
-    javascriptCompile() {
-  		foo="src/js/files/$1.js -t hbsfy -o src/js/out/$1.js"
-    	watchify "$foo"
+    javascriptCompile () {
+  		foo=(src/js/files/"$1".js -t hbsfy -o src/js/out/"$1".js)
+  		watchify "${foo[@]}"
 	}
 	alias jc=javascriptCompile
 
