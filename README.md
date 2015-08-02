@@ -78,7 +78,7 @@
 	sw
 
 ### Workflow [Prod]
-    nodemon server.js   [DEBUG false]
+    npm start   [DEBUG false]
     gulp --file [fileName] eg. gulp -file my-sample-file 
     
 ##### name of html, css and js should be same and unique for gulp-task to work properly
