@@ -56,7 +56,9 @@
 
 ##### Run Browserify with watchify [for js compilation]
     watchify src/js/files/my-sample-file.js -t hbsfy -o src/js/out/my-sample-file.js
+
     or
+
     set alias by:  
     javascriptCompile() {
   		foo="src/js/files/$1.js -t hbsfy -o src/js/out/$1.js"
@@ -64,10 +66,16 @@
 	}
 	alias jc=javascriptCompile
 
+	and run 
+	jc [filename]  // without '.js'
+
 ##### Run Sass [for css compilation]
     sass --watch src/css/sass/files:src/css/out
     or
 	set alias by:  alias sw='sass --watch src/css/sass/files:src/css/out'
+
+	and  run
+	sw
 
 ### Workflow [Prod]
     nodemon server.js   [DEBUG false]
