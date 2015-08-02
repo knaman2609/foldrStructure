@@ -52,15 +52,22 @@
 ### Workflow [Dev]
 ##### Start  the server
    
-    nodemon server.js   [DEBUG true]
+    npm start   [DEBUG true]
 
 ##### Run Browserify with watchify [for js compilation]
-    cd src/js      
-    watchify files/my-sample-file.js -t hbsfy -o out/my-sample-file.js
+    watchify src/js/files/my-sample-file.js -t hbsfy -o src/js/out/my-sample-file.js
+    or
+    set alias by:  
+    javascriptCompile() {
+  		foo="src/js/files/$1.js -t hbsfy -o src/js/out/$1.js"
+    	watchify "$foo"
+	}
+	alias jc=javascriptCompile
 
 ##### Run Sass [for css compilation]
-    cd src/css 
-    sass --watch sass/files:out
+    sass --watch src/css/sass/files:src/css/out
+    or
+	set alias by:  alias sw='sass --watch src/css/sass/files:src/css/out'
 
 ### Workflow [Prod]
     nodemon server.js   [DEBUG false]
