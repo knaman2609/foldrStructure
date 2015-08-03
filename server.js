@@ -33,4 +33,6 @@ app.use(function(req, res, next) {
 require('./routes.js')(app);
 
 app.listen(port);
-console.log('The magic happens on port ' + port);
+
+var mode = DEBUG?'dev':'prod';
+console.log('Server started in '+ mode +' mode on port '+ port);
