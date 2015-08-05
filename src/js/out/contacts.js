@@ -13406,18 +13406,153 @@ return jQuery;
 },{}],13:[function(require,module,exports){
 arguments[4][2][0].apply(exports,arguments)
 },{"dup":2}],14:[function(require,module,exports){
+var Backbone = require( "backbone" );
+var User = require( "../models/user" );
+
+var Users = Backbone.Collection.extend({
+	model: User
+});
+
+module.exports = Users;
+},{"../models/user":17,"backbone":1}],15:[function(require,module,exports){
 var $ = require( "jquery" );
 var Backbone = require( "backbone" );
+
+var FilteredList = require('./views/filter-users');
+var FilterModel = require( "./models/filter-users" );
+var Users = require('./collections/users');
+
+var users = new Users([
+	{name: 'John'}, 
+	{name: 'Snow'},
+	{name: 'Ana'},
+	{name: 'james'},
+	{name: 'Sarah'},
+	{name: 'Matt'}
+]);
+var filterModel = new FilterModel();
+var filteredList = new FilteredList({
+							model: 	filterModel
+						});
+filterModel.set('usersColl', users);
+$('.container').html(filteredList.el);
+
+setTimeout(function() {
+	filterModel.set('usersColl', new Users([
+		{name: 'John', 'status': 'off'}, 
+		{name: 'Snow', 'status': 'busy'},
+		{name: 'Ana', 'status': 'drunk'},
+		{name: 'james'},
+		{name: 'Sarah'},
+		{name: 'Matt'}
+	]));	
+}, 5000);
+
+setTimeout(function() {
+	filterModel.set('usersColl', new Users([
+		{name: 'John', 'status': 'unknown'}, 
+		{name: 'Snow', 'status': 'busy'},
+		{name: 'Ana', 'status': 'online'},
+		{name: 'james','status':  'off'},
+		{name: 'Sarah', 'status': 'online'},
+		{name: 'Matt'}
+	]));	
+}, 10000);
+
+},{"./collections/users":14,"./models/filter-users":16,"./views/filter-users":19,"backbone":1,"jquery":12}],16:[function(require,module,exports){
+var Backbone = require( "backbone" );
 var _ = require( "underscore" );
-var userTemplate = require( "./templates/user-template.hbs" );
 
+var FilteredList = Backbone.Model.extend({
+	defaults: {
+		searchText: '',
+		users: null,
+		usersColl: null
+	},
+	initialize: function () {
+		this.on('change:usersColl', this._usersCollToArray, this);
+		this.on('change:searchText', this._filter, this);
+	},
+	_usersCollToArray: function() {
+		this.set('users', this.get('usersColl').toJSON());
 
+		if (this.get('searchText'))
+		this._filter();
+	},
+	_filter: function() {
+		var users = this.get('usersColl').toJSON(),
+			filterBy = this.get('searchText'),
+			newList;
 
-},{"./templates/user-template.hbs":15,"backbone":1,"jquery":12,"underscore":13}],15:[function(require,module,exports){
+		newList =  _.filter(users, function(user) {
+			var u = user.name.toLocaleLowerCase();
+
+			if (u.indexOf(filterBy) != -1)
+			return true;
+		});
+		
+		this.set('users', newList);			
+	}
+});
+
+module.exports = FilteredList;
+},{"backbone":1,"underscore":13}],17:[function(require,module,exports){
+var Backbone = require( "backbone" );
+
+var User = Backbone.Model.extend({
+	defaults: {
+		name: '',
+		status: 'online'
+	}
+});
+
+module.exports = User;
+},{"backbone":1}],18:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
-module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-    return "test";
+module.exports = HandlebarsCompiler.template({"1":function(depth0,helpers,partials,data) {
+    var stack1;
+
+  return ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.users : depth0),{"name":"each","hash":{},"fn":this.program(2, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
+},"2":function(depth0,helpers,partials,data) {
+    var helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
+
+  return "		<div class=\"filter-users__user-name\">"
+    + alias3(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
+    + "</div>\n		<div class=\"filter-users__user-status\">"
+    + alias3(((helper = (helper = helpers.status || (depth0 != null ? depth0.status : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"status","hash":{},"data":data}) : helper)))
+    + "</div>\n";
+},"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+    var stack1;
+
+  return ((stack1 = helpers['if'].call(depth0,((stack1 = (depth0 != null ? depth0.users : depth0)) != null ? stack1.length : stack1),{"name":"if","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
 },"useData":true});
 
-},{"hbsfy/runtime":11}]},{},[14]);
+},{"hbsfy/runtime":11}],19:[function(require,module,exports){
+var Backbone = require( "backbone" );
+var filterTpl = require( "../templates/filter-users.hbs" );
+
+var FilteredView = Backbone.View.extend({
+	className: ['filter-users'],
+	tpl: filterTpl,
+	initialize: function() {
+		this.listenTo(this.model, 'change:users', this.renderList);
+		this.render();
+	},
+	render: function() {
+		this.$el.html('<div class="filter-users__input"> <input type="text" value="'+ this.model.get('searchText')  +'" autofocus> </div><div class="filter-users__list"></div>');
+
+		return this;
+	},
+	renderList: function() {
+		this.$el.find('.filter-users__list').html(this.tpl(this.model.attributes));
+	},
+	events: {
+		'keyup input': function(e) {
+			this.model.set('searchText', e.target.value);
+		}
+	}
+});
+
+module.exports = FilteredView;
+},{"../templates/filter-users.hbs":18,"backbone":1}]},{},[15]);
