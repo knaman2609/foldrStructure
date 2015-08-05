@@ -23,15 +23,19 @@
 	        --sass/
 	            --base/settings.scss, reset.scss, mixin.scss, ..etc 
 	            --components/button.scss, input.scss, modal.scss, ..etc
-	            --files/login.scss, signup.scss, ..etc
+	            --files/login.scss, signup.scss
 	            --layout/header.scss, .footer.scss, ...etc
+	            --modules
 	        --vendor/bootstrap.scss
 	        
 	    --js/
-	        --files/login.js
+	        --files/
+	        	--login/
+	        		login.js
+	        	--contacts/
+	        		contacts.js
 	        --out/complied.js
-	        --templates/user-template.hbs
-	        --utils/pretty-date.js
+	        --local_modules/
 	        --vendor/vendor.min.js [files not present in node modules]
     
     html/login.html
@@ -48,6 +52,7 @@
     .gitignore
     gulpfile.js
     README.md
+    .jscsrc
 
 ### Workflow [Dev]
 ##### Start  the server
@@ -83,4 +88,4 @@
     
 ##### name of html, css and js should be same and unique for gulp-task to work properly
 eg. for **login.html** in html folder you should have **login.scss** in **css/sass/files**
-and **login.js** in **js/files/**
+and **login.js** in **js/files/login**

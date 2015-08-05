@@ -1,0 +1,1 @@
+var template = require("./html/template.hbs");
