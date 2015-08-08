@@ -1,5 +1,5 @@
-// var DEBUG = true;
-var DEBUG = false;
+var DEBUG = true;
+// var DEBUG = false;
 
 var express  = require('express');
 var app      = express();
@@ -16,7 +16,6 @@ app.use('/assets', express.static(path.join(__dirname, '/assets')));
 
 // using swig
 app.engine('html', swig.renderFile);
-
 
 // dir for html
 var dir = DEBUG?'/src/html':'/dist/html';
