@@ -31,16 +31,20 @@
 	        
 	    --js/
 	        --files/
-	        	--login/
+	        	--accounts/
 	        		login.js
+	        		signup.js
 	        	--contacts/
 	        		contacts.js
 	        --out/complied.js
 	        --local_modules/
 	        --vendor/vendor.min.js [files not present in node modules]
     
-    html/login.html
-    
+    html/contact.html
+    	/accounts/
+    		login.html
+    		signup.html
+
     assets/
         fonts/
         img/

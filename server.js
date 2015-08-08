@@ -1,5 +1,5 @@
-var DEBUG = true;
-// var DEBUG = false;
+// var DEBUG = true;
+var DEBUG = false;
 
 var express  = require('express');
 var app      = express();
@@ -11,12 +11,15 @@ var swig     = require('swig');
 var staticFiles = DEBUG?'/src':'/dist';
 app.use(express.static(path.join(__dirname, staticFiles)));
 
+// for assets
+app.use('/assets', express.static(path.join(__dirname, '/assets')));
+
 // using swig
 app.engine('html', swig.renderFile);
 
 
 // dir for html
-var dir = DEBUG?'/html':'/dist';
+var dir = DEBUG?'/src/html':'/dist/html';
 app.set('views', __dirname + dir);
 
 // for dev
